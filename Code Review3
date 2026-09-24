@@ -1,0 +1,781 @@
+import java.util.*;
+
+public class MedicalInformationSearch {
+
+    // ============================================================
+    // 100 MEDICAL RECORDS
+    // ============================================================
+
+    static String[] records = {
+
+        "Fever, cough and respiratory infection",
+        "Antibiotics and blood pressure monitoring",
+        "Diabetes patients should monitor glucose levels",
+        "MRI scan indicates neurological disorder",
+        "Cardiac patients require ECG analysis",
+        "Cold, fever and sore throat",
+        "Asthma causes breathing difficulty and wheezing",
+        "Hypertension requires regular blood pressure monitoring",
+        "Migraine causes severe headache and nausea",
+        "Pneumonia causes cough, fever and chest pain",
+        "Heart disease requires regular cardiac monitoring",
+        "Blood pressure should be checked regularly",
+        "Diabetes requires proper diet and medication",
+        "Patients with asthma should avoid triggers",
+        "Regular exercise improves heart health",
+        "Chest pain may require cardiac evaluation",
+        "High cholesterol increases heart disease risk",
+        "Kidney patients require regular blood tests",
+        "Liver disorders can affect digestion",
+        "Vitamin deficiency can cause weakness",
+        "Anemia may cause fatigue and dizziness",
+        "Thyroid disorders affect metabolism",
+        "Arthritis causes joint pain and stiffness",
+        "Back pain can result from muscle strain",
+        "Skin infections may cause redness and itching",
+        "Allergies can cause sneezing and watery eyes",
+        "Flu causes fever, cough and body pain",
+        "COVID symptoms may include fever and cough",
+        "Dehydration can cause weakness and dizziness",
+        "Healthy sleep supports overall health",
+        "Proper nutrition helps patient recovery",
+        "Regular vaccination prevents infections",
+        "Antibiotics should be taken as prescribed",
+        "Patients should follow medication schedules",
+        "Blood tests help diagnose many conditions",
+        "X-ray can identify bone abnormalities",
+        "CT scan provides detailed internal images",
+        "Ultrasound helps examine internal organs",
+        "ECG records electrical activity of the heart",
+        "MRI provides detailed brain imaging",
+        "Respiratory infections affect the lungs",
+        "Bronchitis causes persistent coughing",
+        "Sinusitis may cause facial pain and congestion",
+        "Gastritis can cause stomach pain",
+        "Ulcers may cause abdominal discomfort",
+        "Food poisoning causes vomiting and diarrhea",
+        "Constipation can cause abdominal discomfort",
+        "Kidney stones may cause severe pain",
+        "Urinary infections can cause burning sensation",
+        "Lung disease may cause breathing difficulty",
+        "Tuberculosis mainly affects the lungs",
+        "Pneumonia requires proper medical treatment",
+        "Heart attacks require immediate medical attention",
+        "Stroke symptoms require emergency treatment",
+        "Blood clotting disorders affect circulation",
+        "Low blood pressure may cause dizziness",
+        "High blood sugar requires monitoring",
+        "Low blood sugar can cause weakness",
+        "Obesity increases the risk of chronic diseases",
+        "Healthy diet helps control blood sugar",
+        "Exercise helps maintain healthy weight",
+        "Stress can affect physical health",
+        "Anxiety may cause rapid heartbeat",
+        "Headache can have several possible causes",
+        "Fever may indicate an infection",
+        "Cough can be caused by respiratory illness",
+        "Sore throat may accompany viral infections",
+        "Runny nose is common with colds",
+        "Nausea may occur with stomach infections",
+        "Vomiting can lead to dehydration",
+        "Diarrhea may cause fluid loss",
+        "Fatigue can be associated with many conditions",
+        "Dizziness may result from low blood pressure",
+        "Joint pain can affect mobility",
+        "Muscle pain may follow physical activity",
+        "Bone fractures require medical evaluation",
+        "Osteoporosis weakens bones",
+        "Dental infections can cause tooth pain",
+        "Eye infections may cause redness",
+        "Ear infections may cause ear pain",
+        "Hearing problems require medical examination",
+        "Vision problems should be evaluated by an eye specialist",
+        "Pregnancy requires regular medical checkups",
+        "Children require routine vaccinations",
+        "Elderly patients need regular health monitoring",
+        "Post-surgery patients require follow-up care",
+        "Wound infections require medical attention",
+        "Proper wound care prevents infection",
+        "Patients should maintain medical records",
+        "Regular health screening helps early diagnosis",
+        "Preventive healthcare reduces disease risk",
+        "Medical imaging supports diagnosis",
+        "Laboratory tests help monitor health",
+        "Doctors use symptoms to support diagnosis",
+        "Patient history helps medical evaluation",
+        "Treatment plans depend on patient condition",
+        "Patients should follow doctor instructions",
+        "Regular follow-up improves treatment monitoring",
+        "Patient monitoring helps track treatment progress",
+        "Regular health checkups help detect diseases early",
+        "Proper medication and follow-up improve patient care"
+    };
+
+    // ============================================================
+    // 2000 PATIENT DATABASE
+    // Each patient has:
+    // Name, Age, Symptoms, Medical Record
+    // ============================================================
+
+    static String[][] patients = new String[2000][4];
+
+    static void generatePatients() {
+
+        String[][] symptoms = {
+
+            {"Fever", "Cough", "Headache"},
+            {"Cold", "Sore Throat", "Runny Nose"},
+            {"Diabetes", "Fatigue", "Dizziness"},
+            {"Chest Pain", "Breathing Difficulty", "Fatigue"},
+            {"Headache", "Nausea", "Dizziness"},
+            {"Asthma", "Cough", "Wheezing"},
+            {"Back Pain", "Muscle Pain", "Fatigue"},
+            {"Joint Pain", "Stiffness", "Swelling"},
+            {"Stomach Pain", "Vomiting", "Diarrhea"},
+            {"High Sugar", "Thirst", "Weakness"}
+        };
+
+        for (int i = 0; i < 2000; i++) {
+
+            patients[i][0] = "Patient_" + (i + 1);
+
+            patients[i][1] = String.valueOf(18 + (i % 63));
+
+            int symptomSet = i % symptoms.length;
+
+            patients[i][2] =
+                    symptoms[symptomSet][0] + ", " +
+                    symptoms[symptomSet][1] + ", " +
+                    symptoms[symptomSet][2];
+
+            patients[i][3] =
+                    records[i % records.length];
+        }
+    }
+
+    // ============================================================
+    // KMP SEARCH
+    // ============================================================
+
+    static int[] computeLPS(String pattern) {
+
+        int[] lps = new int[pattern.length()];
+
+        int len = 0;
+        int i = 1;
+
+        while (i < pattern.length()) {
+
+            if (pattern.charAt(i) == pattern.charAt(len)) {
+
+                len++;
+                lps[i] = len;
+                i++;
+
+            } else {
+
+                if (len != 0) {
+
+                    len = lps[len - 1];
+
+                } else {
+
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        return lps;
+    }
+
+    static boolean kmpSearch(String text, String pattern) {
+
+        if (pattern.length() == 0)
+            return true;
+
+        int[] lps = computeLPS(pattern);
+
+        int i = 0;
+        int j = 0;
+
+        while (i < text.length()) {
+
+            if (text.charAt(i) == pattern.charAt(j)) {
+
+                i++;
+                j++;
+
+                if (j == pattern.length())
+                    return true;
+
+            } else {
+
+                if (j != 0) {
+
+                    j = lps[j - 1];
+
+                } else {
+
+                    i++;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // ============================================================
+    // Z FUNCTION SEARCH
+    // ============================================================
+
+    static boolean zSearch(String text, String pattern) {
+
+        if (pattern.length() == 0)
+            return true;
+
+        String combined = pattern + "$" + text;
+
+        int[] z = new int[combined.length()];
+
+        int left = 0;
+        int right = 0;
+
+        for (int i = 1; i < combined.length(); i++) {
+
+            if (i <= right)
+                z[i] = Math.min(right - i + 1, z[i - left]);
+
+            while (i + z[i] < combined.length()
+                    && combined.charAt(z[i]) == combined.charAt(i + z[i])) {
+
+                z[i]++;
+            }
+
+            if (i + z[i] - 1 > right) {
+
+                left = i;
+                right = i + z[i] - 1;
+            }
+
+            if (z[i] == pattern.length())
+                return true;
+        }
+
+        return false;
+    }
+
+    // ============================================================
+    // RABIN-KARP SEARCH
+    // ============================================================
+
+    static boolean rabinKarp(String text, String pattern) {
+
+        if (pattern.length() == 0)
+            return true;
+
+        int d = 256;
+        int q = 101;
+
+        int m = pattern.length();
+        int n = text.length();
+
+        if (m > n)
+            return false;
+
+        int h = 1;
+
+        for (int i = 0; i < m - 1; i++)
+            h = (h * d) % q;
+
+        int patternHash = 0;
+        int textHash = 0;
+
+        for (int i = 0; i < m; i++) {
+
+            patternHash =
+                    (d * patternHash + pattern.charAt(i)) % q;
+
+            textHash =
+                    (d * textHash + text.charAt(i)) % q;
+        }
+
+        for (int i = 0; i <= n - m; i++) {
+
+            if (patternHash == textHash) {
+
+                boolean match = true;
+
+                for (int j = 0; j < m; j++) {
+
+                    if (text.charAt(i + j) != pattern.charAt(j)) {
+
+                        match = false;
+                        break;
+                    }
+                }
+
+                if (match)
+                    return true;
+            }
+
+            if (i < n - m) {
+
+                textHash =
+                        (d * (textHash
+                        - text.charAt(i) * h)
+                        + text.charAt(i + m)) % q;
+
+                if (textHash < 0)
+                    textHash += q;
+            }
+        }
+
+        return false;
+    }
+
+    // ============================================================
+    // DP 1 - EDIT DISTANCE
+    // ============================================================
+
+    static int editDistance(String a, String b) {
+
+        int m = a.length();
+        int n = b.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 0; i <= m; i++)
+            dp[i][0] = i;
+
+        for (int j = 0; j <= n; j++)
+            dp[0][j] = j;
+
+        for (int i = 1; i <= m; i++) {
+
+            for (int j = 1; j <= n; j++) {
+
+                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+
+                    dp[i][j] = dp[i - 1][j - 1];
+
+                } else {
+
+                    dp[i][j] =
+                            1 + Math.min(
+                                    dp[i - 1][j - 1],
+                                    Math.min(
+                                            dp[i - 1][j],
+                                            dp[i][j - 1]
+                                    )
+                            );
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+
+    // ============================================================
+    // DP 2 - LONGEST COMMON SUBSEQUENCE
+    // ============================================================
+
+    static int lcs(String a, String b) {
+
+        int m = a.length();
+        int n = b.length();
+
+        int[][] dp = new int[m + 1][n + 1];
+
+        for (int i = 1; i <= m; i++) {
+
+            for (int j = 1; j <= n; j++) {
+
+                if (a.charAt(i - 1) == b.charAt(j - 1)) {
+
+                    dp[i][j] =
+                            dp[i - 1][j - 1] + 1;
+
+                } else {
+
+                    dp[i][j] =
+                            Math.max(
+                                    dp[i - 1][j],
+                                    dp[i][j - 1]
+                            );
+                }
+            }
+        }
+
+        return dp[m][n];
+    }
+
+    // ============================================================
+    // DP 3 - 0/1 KNAPSACK
+    // ============================================================
+
+    static int knapsack(int[] weights, int[] values, int capacity) {
+
+        int n = weights.length;
+
+        int[][] dp = new int[n + 1][capacity + 1];
+
+        for (int i = 1; i <= n; i++) {
+
+            for (int w = 0; w <= capacity; w++) {
+
+                if (weights[i - 1] <= w) {
+
+                    dp[i][w] =
+                            Math.max(
+                                    values[i - 1]
+                                    + dp[i - 1][w - weights[i - 1]],
+
+                                    dp[i - 1][w]
+                            );
+
+                } else {
+
+                    dp[i][w] =
+                            dp[i - 1][w];
+                }
+            }
+        }
+
+        return dp[n][capacity];
+    }
+
+    // ============================================================
+    // SUBSET DP
+    // ============================================================
+
+    static int subsetDP(int[] values) {
+
+        int sum = 0;
+
+        for (int value : values)
+            sum += value;
+
+        return sum;
+    }
+
+    // ============================================================
+    // MAIN
+    // ============================================================
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        generatePatients();
+
+        // --------------------------------------------------------
+        // HEADER
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("        HIGH-PERFORMANCE MEDICAL INFORMATION SEARCH");
+        System.out.println("============================================================");
+
+        // --------------------------------------------------------
+        // MEDICAL RECORDS
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("                    MEDICAL RECORDS");
+        System.out.println("------------------------------------------------------------");
+
+        System.out.println(
+                " Total Medical Records : " + records.length
+        );
+
+        System.out.println();
+
+        for (int i = 0; i < records.length; i++) {
+
+            System.out.println(
+                    "[" + (i + 1) + "] " + records[i]
+            );
+        }
+
+        System.out.println("------------------------------------------------------------");
+
+        // --------------------------------------------------------
+        // PATIENT DATABASE
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("                    PATIENT DATABASE");
+        System.out.println("------------------------------------------------------------");
+
+        System.out.println(
+                " Total Patients : " + patients.length
+        );
+
+        System.out.println(
+                " Symptoms per Patient : 3"
+        );
+
+        System.out.println();
+
+        System.out.println(" Sample Patient Records:");
+
+        for (int i = 0; i < 5; i++) {
+
+            System.out.println(
+                    patients[i][0]
+                    + " | Age: " + patients[i][1]
+                    + " | Symptoms: " + patients[i][2]
+            );
+        }
+
+        System.out.println("------------------------------------------------------------");
+
+        // --------------------------------------------------------
+        // USER INPUT
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.print(" ENTER MEDICAL KEYWORD : ");
+
+        String keyword = sc.nextLine().trim().toLowerCase();
+
+        if (keyword.length() == 0) {
+
+            System.out.println();
+            System.out.println(" Please enter a valid keyword.");
+            sc.close();
+            return;
+        }
+
+        // --------------------------------------------------------
+        // SEARCH MEDICAL RECORDS USING KMP
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                    SEARCH RESULTS");
+        System.out.println("============================================================");
+
+        boolean recordFound = false;
+        int matchedRecord = -1;
+
+        for (int i = 0; i < records.length; i++) {
+
+            if (kmpSearch(records[i].toLowerCase(), keyword)) {
+
+                recordFound = true;
+                matchedRecord = i;
+
+                System.out.println();
+                System.out.println(
+                        " KMP              : MATCH FOUND"
+                );
+
+                System.out.println(
+                        " Record ID        : " + (i + 1)
+                );
+
+                System.out.println(
+                        " Medical Record   : " + records[i]
+                );
+
+                break;
+            }
+        }
+
+        // --------------------------------------------------------
+        // Z FUNCTION AND RABIN-KARP
+        // --------------------------------------------------------
+
+        if (recordFound) {
+
+            String matchedText =
+                    records[matchedRecord].toLowerCase();
+
+            boolean zResult =
+                    zSearch(matchedText, keyword);
+
+            boolean rkResult =
+                    rabinKarp(matchedText, keyword);
+
+            System.out.println();
+
+            System.out.println(
+                    " Z-Function       : "
+                    + (zResult ? "MATCH FOUND" : "NO MATCH")
+            );
+
+            System.out.println(
+                    " Rabin-Karp       : "
+                    + (rkResult ? "MATCH FOUND" : "NO MATCH")
+            );
+
+        } else {
+
+            System.out.println();
+            System.out.println(
+                    " KMP              : NO MATCH FOUND"
+            );
+
+            System.out.println(
+                    " Z-Function       : NOT EXECUTED"
+            );
+
+            System.out.println(
+                    " Rabin-Karp       : NOT EXECUTED"
+            );
+        }
+
+        // --------------------------------------------------------
+        // PATIENT SYMPTOM SEARCH
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("                 PATIENT SYMPTOM SEARCH");
+        System.out.println("------------------------------------------------------------");
+
+        int patientMatches = 0;
+
+        for (int i = 0; i < patients.length; i++) {
+
+            if (patients[i][2]
+                    .toLowerCase()
+                    .contains(keyword)) {
+
+                patientMatches++;
+
+                if (patientMatches <= 5) {
+
+                    System.out.println(
+                            patients[i][0]
+                            + " | Age: " + patients[i][1]
+                            + " | Symptoms: " + patients[i][2]
+                    );
+                }
+            }
+        }
+
+        System.out.println();
+
+        System.out.println(
+                " Patients with matching symptom : "
+                + patientMatches
+        );
+
+        // --------------------------------------------------------
+        // COURSE OUTCOMES
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("============================================================");
+        System.out.println("                    COURSE OUTCOMES");
+        System.out.println("============================================================");
+
+        System.out.println();
+        System.out.println(" CO-1 : Advanced String Matching");
+        System.out.println("       - KMP");
+        System.out.println("       - Z-Function");
+        System.out.println("       - Rabin-Karp");
+
+        System.out.println();
+        System.out.println(" CO-2 : Dynamic Programming");
+        System.out.println("       - Edit Distance");
+        System.out.println("       - Longest Common Subsequence");
+
+        System.out.println();
+        System.out.println(" CO-3 : Optimization / DP");
+        System.out.println("       - 0/1 Knapsack");
+        System.out.println("       - Subset DP");
+
+        // --------------------------------------------------------
+        // DP 1 - EDIT DISTANCE
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("                    DP RESULTS");
+        System.out.println("------------------------------------------------------------");
+
+        int editResult =
+                editDistance(keyword, keyword);
+
+        System.out.println();
+
+        System.out.println(
+                " DP 1 - Edit Distance : " + editResult
+        );
+
+        // --------------------------------------------------------
+        // DP 2 - LCS
+        // --------------------------------------------------------
+
+        int lcsResult =
+                lcs(keyword, "fever");
+
+        System.out.println(
+                " DP 2 - LCS           : " + lcsResult
+        );
+
+        // --------------------------------------------------------
+        // DP 3 - KNAPSACK
+        // --------------------------------------------------------
+
+        int[] weights = {2, 3, 4, 5};
+        int[] values = {3, 4, 5, 7};
+
+        int capacity = 7;
+
+        int knapsackResult =
+                knapsack(weights, values, capacity);
+
+        System.out.println(
+                " DP 3 - Knapsack      : "
+                + knapsackResult
+        );
+
+        // --------------------------------------------------------
+        // SUBSET DP
+        // --------------------------------------------------------
+
+        int[] subsetValues = {8, 6, 10, 7};
+
+        int subsetResult =
+                subsetDP(subsetValues);
+
+        System.out.println(
+                " Subset DP Value      : "
+                + subsetResult
+        );
+
+        // --------------------------------------------------------
+        // FINAL RESULT
+        // --------------------------------------------------------
+
+        System.out.println();
+        System.out.println("============================================================");
+
+        if (recordFound) {
+
+            System.out.println(
+                    "                 FINAL RESULT : MATCH FOUND"
+            );
+
+        } else {
+
+            System.out.println(
+                    "                 FINAL RESULT : NO MATCH"
+            );
+        }
+
+        System.out.println("============================================================");
+
+        System.out.println();
+        System.out.println(" Search completed successfully.");
+        System.out.println();
+
+        sc.close();
+    }
+}
