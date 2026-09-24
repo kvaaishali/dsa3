@@ -1,0 +1,173 @@
+=======================================================
+        HIGH-PERFORMANCE MEDICAL INFORMATION SEARCH
+============================================================
+
+                    MEDICAL RECORDS
+------------------------------------------------------------
+ Total Medical Records : 101
+
+[1] Fever, cough and respiratory infection
+[2] Antibiotics and blood pressure monitoring
+[3] Diabetes patients should monitor glucose levels
+[4] MRI scan indicates neurological disorder
+[5] Cardiac patients require ECG analysis
+[6] Cold, fever and sore throat
+[7] Asthma causes breathing difficulty and wheezing
+[8] Hypertension requires regular blood pressure monitoring
+[9] Migraine causes severe headache and nausea
+[10] Pneumonia causes cough, fever and chest pain
+[11] Heart disease requires regular cardiac monitoring
+[12] Blood pressure should be checked regularly
+[13] Diabetes requires proper diet and medication
+[14] Patients with asthma should avoid triggers
+[15] Regular exercise improves heart health
+[16] Chest pain may require cardiac evaluation
+[17] High cholesterol increases heart disease risk
+[18] Kidney patients require regular blood tests
+[19] Liver disorders can affect digestion
+[20] Vitamin deficiency can cause weakness
+[21] Anemia may cause fatigue and dizziness
+[22] Thyroid disorders affect metabolism
+[23] Arthritis causes joint pain and stiffness
+[24] Back pain can result from muscle strain
+[25] Skin infections may cause redness and itching
+[26] Allergies can cause sneezing and watery eyes
+[27] Flu causes fever, cough and body pain
+[28] COVID symptoms may include fever and cough
+[29] Dehydration can cause weakness and dizziness
+[30] Healthy sleep supports overall health
+[31] Proper nutrition helps patient recovery
+[32] Regular vaccination prevents infections
+[33] Antibiotics should be taken as prescribed
+[34] Patients should follow medication schedules
+[35] Blood tests help diagnose many conditions
+[36] X-ray can identify bone abnormalities
+[37] CT scan provides detailed internal images
+[38] Ultrasound helps examine internal organs
+[39] ECG records electrical activity of the heart
+[40] MRI provides detailed brain imaging
+[41] Respiratory infections affect the lungs
+[42] Bronchitis causes persistent coughing
+[43] Sinusitis may cause facial pain and congestion
+[44] Gastritis can cause stomach pain
+[45] Ulcers may cause abdominal discomfort
+[46] Food poisoning causes vomiting and diarrhea
+[47] Constipation can cause abdominal discomfort
+[48] Kidney stones may cause severe pain
+[49] Urinary infections can cause burning sensation
+[50] Lung disease may cause breathing difficulty
+[51] Tuberculosis mainly affects the lungs
+[52] Pneumonia requires proper medical treatment
+[53] Heart attacks require immediate medical attention
+[54] Stroke symptoms require emergency treatment
+[55] Blood clotting disorders affect circulation
+[56] Low blood pressure may cause dizziness
+[57] High blood sugar requires monitoring
+[58] Low blood sugar can cause weakness
+[59] Obesity increases the risk of chronic diseases
+[60] Healthy diet helps control blood sugar
+[61] Exercise helps maintain healthy weight
+[62] Stress can affect physical health
+[63] Anxiety may cause rapid heartbeat
+[64] Headache can have several possible causes
+[65] Fever may indicate an infection
+[66] Cough can be caused by respiratory illness
+[67] Sore throat may accompany viral infections
+[68] Runny nose is common with colds
+[69] Nausea may occur with stomach infections
+[70] Vomiting can lead to dehydration
+[71] Diarrhea may cause fluid loss
+[72] Fatigue can be associated with many conditions
+[73] Dizziness may result from low blood pressure
+[74] Joint pain can affect mobility
+[75] Muscle pain may follow physical activity
+[76] Bone fractures require medical evaluation
+[77] Osteoporosis weakens bones
+[78] Dental infections can cause tooth pain
+[79] Eye infections may cause redness
+[80] Ear infections may cause ear pain
+[81] Hearing problems require medical examination
+[82] Vision problems should be evaluated by an eye specialist
+[83] Pregnancy requires regular medical checkups
+[84] Children require routine vaccinations
+[85] Elderly patients need regular health monitoring
+[86] Post-surgery patients require follow-up care
+[87] Wound infections require medical attention
+[88] Proper wound care prevents infection
+[89] Patients should maintain medical records
+[90] Regular health screening helps early diagnosis
+[91] Preventive healthcare reduces disease risk
+[92] Medical imaging supports diagnosis
+[93] Laboratory tests help monitor health
+[94] Doctors use symptoms to support diagnosis
+[95] Patient history helps medical evaluation
+[96] Treatment plans depend on patient condition
+[97] Patients should follow doctor instructions
+[98] Regular follow-up improves treatment monitoring
+[99] Patient monitoring helps track treatment progress
+[100] Regular health checkups help detect diseases early
+[101] Proper medication and follow-up improve patient care
+------------------------------------------------------------
+
+                    PATIENT DATABASE
+------------------------------------------------------------
+ Total Patients : 2000
+ Symptoms per Patient : 3
+
+ Sample Patient Records:
+Patient_1 | Age: 18 | Symptoms: Fever, Cough, Headache
+Patient_2 | Age: 19 | Symptoms: Cold, Sore Throat, Runny Nose
+Patient_3 | Age: 20 | Symptoms: Diabetes, Fatigue, Dizziness
+Patient_4 | Age: 21 | Symptoms: Chest Pain, Breathing Difficulty, Fatigue
+Patient_5 | Age: 22 | Symptoms: Headache, Nausea, Dizziness
+------------------------------------------------------------
+
+ ENTER MEDICAL KEYWORD : 33
+
+============================================================
+                    SEARCH RESULTS
+============================================================
+
+ KMP              : NO MATCH FOUND
+ Z-Function       : NOT EXECUTED
+ Rabin-Karp       : NOT EXECUTED
+
+------------------------------------------------------------
+                 PATIENT SYMPTOM SEARCH
+------------------------------------------------------------
+
+ Patients with matching symptom : 0
+
+============================================================
+                    COURSE OUTCOMES
+============================================================
+
+ CO-1 : Advanced String Matching
+       - KMP
+       - Z-Function
+       - Rabin-Karp
+
+ CO-2 : Dynamic Programming
+       - Edit Distance
+       - Longest Common Subsequence
+
+ CO-3 : Optimization / DP
+       - 0/1 Knapsack
+       - Subset DP
+
+------------------------------------------------------------
+                    DP RESULTS
+------------------------------------------------------------
+
+ DP 1 - Edit Distance : 0
+ DP 2 - LCS           : 0
+ DP 3 - Knapsack      : 10
+ Subset DP Value      : 31
+
+============================================================
+                 FINAL RESULT : NO MATCH
+============================================================
+
+ Search completed successfully.
+
+PS C:\Users\bindhu\MedicalInformationSearch> 
